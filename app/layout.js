@@ -1,3 +1,4 @@
+import Link from "next/link";
 
 export const metadata = {
   title: "Create Next App",
@@ -5,10 +6,32 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  //TODO: header should contain About, Sign in, All Reviews
+  //TODO: footer should contain copyright info
+  //note: using <a href> will replace the entire page even when there are some constants on the webpage. So we do client-side rendering to replace only the changed elements using <Link/>.
+  //fixme: why is the pre-rendering not happening here?? On hover I can't see the pre-rendering links in network tab
+        //fixed: this works in npm run build!!!
+  //note: when clicked on these links, only the body changes, the whole page is not unmounted and mounted.
   return (
     <html lang="en">
       <body>
-        {children}
+        <header>
+          <nav>
+            <ul>
+              <li>
+                <Link href="/">Home</Link>
+              </li>
+              <li>
+                <Link href="/reviews">Reviews</Link>
+              </li>
+              <li>
+                <Link href="/about" prefetch={false}>About</Link>
+              </li>
+            </ul>
+          </nav>
+        </header> 
+        <main>{children}</main>
+        <footer>Game data and images from <a href="https://rawg.io/" target="_blank">RAWG</a></footer>
       </body>
     </html>
   );
